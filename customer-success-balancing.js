@@ -30,11 +30,13 @@ function customerSuccessBalancing(
     });
   });
 
-  const bestCS = ordenedCSs.reduce((csA, csB) =>
-    csA.servedClients > csB.servedClients ? csA.id : csB.id
-  );
+  ordenedCSs = ordenedCSs.sort((a, b) => b.servedClients - a.servedClients);
 
-  return bestCS;
+  if (ordenedCSs[0].servedClients === ordenedCSs[1].servedClients) {
+    return 0
+  } else {
+    return ordenedCSs[0].id;
+  }
 }
 
 function filterAvailableCSs(customerSuccess, customerSuccessAway) {
