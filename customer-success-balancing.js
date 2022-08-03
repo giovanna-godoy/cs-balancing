@@ -9,27 +9,20 @@ function customerSuccessBalancing(
   customers,
   customerSuccessAway
 ) {
-  //Filtrando CSs disponíveis
+
   let availableCSs = filterAvailableCSs(
     customerSuccess,
     customerSuccessAway
   );
 
-  //Ordenando os arrays por ordem crescente de score
   let ordenedCSs = availableCSs.sort((a, b) => a.score - b.score);
   let ordenedCustomers = customers.sort((a, b) => a.score - b.score);
 
-  //Percorrendo o array de CSs
   ordenedCSs.forEach((cs) => {
-    //Inicializando a quantidade de clientes atendidos pelo CS como 0
     cs.servedClients = 0;
-    //Percorrendo o array de clientes
     ordenedCustomers.forEach((customer) => {
-      //Se o score de cs for maior ou igual ao score do cliente, 
       if (cs.score >= customer.score) {
-        //Então o cs atende mais um cliente 
         cs.servedClients++;
-        //Filtrando o array novamente para desconsiderar o cliente já alocado
         ordenedCustomers = ordenedCustomers.filter(
           (c) => c.id != customer.id
         );
@@ -37,7 +30,6 @@ function customerSuccessBalancing(
     });
   });
 
-  //Procurando no array de CSs o que possui mais clientes atendidos
   const bestCS = ordenedCSs.reduce((csA, csB) =>
     csA.servedClients > csB.servedClients ? csA.id : csB.id
   );
